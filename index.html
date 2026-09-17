@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sri Laxmi Narasimha Ganesh Mandali | Pathoor Hindu Sena</title>
+<style>
+:root{--saffron:#f28c28;--gold:#ffd166;--deep:#4a1608;--cream:#fff8e8;--red:#a51d2d}
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:var(--cream);color:#32150c}
+header{background:linear-gradient(135deg,#5b1707,#a83218,#e87921);color:#fff;text-align:center;padding:28px 16px}
+.logo{font-size:44px}.tag{font-size:14px;letter-spacing:1px}
+nav{position:sticky;top:0;background:#fff;box-shadow:0 2px 12px #0002;z-index:5;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:10px}
+nav a{color:var(--deep);text-decoration:none;padding:9px 13px;border-radius:20px;font-weight:700}nav a:hover{background:#ffe3bd}
+.hero{padding:55px 18px;text-align:center;background:radial-gradient(circle at 50% 20%,#fff2b8,transparent 35%),linear-gradient(#fff8e8,#ffdca7)}
+.hero h1{font-size:clamp(30px,7vw,58px);margin:8px 0;color:#8b210e}.hero p{max-width:760px;margin:12px auto;font-size:18px}
+.btn{display:inline-block;border:0;border-radius:28px;padding:13px 20px;background:var(--red);color:#fff;font-weight:800;text-decoration:none;cursor:pointer;margin:6px}
+section{max-width:1050px;margin:auto;padding:42px 18px}.title{text-align:center;color:#8b210e;margin-bottom:25px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}.card{background:#fff;border-radius:18px;padding:22px;box-shadow:0 5px 20px #0001;border:1px solid #f2d6aa}.card h3{margin-top:0;color:#9b2d12}
+form{background:#fff;padding:22px;border-radius:18px;box-shadow:0 5px 20px #0001;max-width:720px;margin:auto}
+label{font-weight:700;display:block;margin-top:13px}input,select,textarea{width:100%;padding:12px;margin-top:6px;border:1px solid #d8b98e;border-radius:10px;font-size:16px}
+.notice{background:#fff0cf;border-left:5px solid var(--saffron);padding:14px;border-radius:8px;margin:15px 0}
+footer{background:#401207;color:#fff;text-align:center;padding:28px 16px;margin-top:20px}
+.small{font-size:13px;opacity:.8}.hidden{display:none}
+#success{background:#e7f7e7;border:1px solid #77b77d;padding:15px;border-radius:10px;margin-top:15px}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🛕🙏</div>
+  <h1>Sri Laxmi Narasimha Ganesh Mandali</h1>
+  <div class="tag">PATHOOR • HINDU SENA</div>
+</header>
+<nav>
+<a href="#home">Home</a><a href="#pooja">Pooja Booking</a><a href="#annadanam">Annadanam</a>
+<a href="#sponsor">Sponsorship</a><a href="#about">About</a><a href="#contact">Contact</a>
+</nav>
+
+<main id="home">
+<section class="hero">
+<h2>🪔 శ్రీ వినాయక చవితి శుభాకాంక్షలు 🪔</h2>
+<p>Welcome to the official community page for Sri Laxmi Narasimha Ganesh Mandali and Durga Devi Mandal, Pathoor.</p>
+<a class="btn" href="#pooja">Book Pooja Slot</a>
+<a class="btn" href="#annadanam">Book Annadanam</a>
+</section>
+
+<section id="about">
+<h2 class="title">Our Mandal</h2>
+<div class="cards">
+<div class="card"><h3>🐘 Ganesh Mandapam</h3><p>Pooja slots, festival programs, annadanam and sponsorship opportunities.</p></div>
+<div class="card"><h3>🌺 Durga Devi Mandal</h3><p>Daily festival activities, pooja bookings and annadanam participation.</p></div>
+<div class="card"><h3>🦁 Narasimha Theme</h3><p>Devotion, tradition, service and community celebration.</p></div>
+</div>
+</section>
+
+<section id="pooja">
+<h2 class="title">Pooja Slot Booking</h2>
+<div class="notice">Select the mandal, date and available time. This starter version stores bookings in this browser. Online shared booking will be connected in the next setup step.</div>
+<form id="poojaForm">
+<label>Name<input required name="name"></label>
+<label>Mobile Number<input required name="phone" inputmode="numeric" pattern="[0-9]{10}" placeholder="10-digit mobile number"></label>
+<label>Mandal<select required name="mandal"><option value="">Select</option><option>Ganesh Mandali</option><option>Durga Devi Mandal</option></select></label>
+<label>Date<input required type="date" name="date"></label>
+<label>Time Slot<select required name="time"><option value="">Select time</option><option>6:00 AM – 7:00 AM</option><option>7:00 AM – 8:00 AM</option><option>8:00 AM – 9:00 AM</option><option>5:00 PM – 6:00 PM</option><option>6:00 PM – 7:00 PM</option><option>7:00 PM – 8:00 PM</option><option>8:00 PM – 9:00 PM</option></select></label>
+<label>Number of devotees<input type="number" min="1" max="20" value="1" name="people"></label>
+<button class="btn" type="submit">Confirm Pooja Request</button>
+<div id="poojaSuccess" class="hidden"></div>
+</form>
+</section>
+
+<section id="annadanam">
+<h2 class="title">Annadanam Booking</h2>
+<div class="notice"><b>Ganesh:</b> one designated annadanam date. <b>Durga Devi:</b> annadanam can be requested for festival dates.</div>
+<form id="annaForm">
+<label>Name<input required name="name"></label>
+<label>Mobile Number<input required name="phone" inputmode="numeric" pattern="[0-9]{10}"></label>
+<label>Mandal<select required name="mandal"><option value="">Select</option><option>Ganesh Mandali</option><option>Durga Devi Mandal</option></select></label>
+<label>Date<input required type="date" name="date"></label>
+<label>Expected devotees<input required type="number" min="1" name="people"></label>
+<label>Notes<textarea name="notes" rows="3" placeholder="Any special details"></textarea></label>
+<button class="btn" type="submit">Submit Annadanam Request</button>
+<div id="annaSuccess" class="hidden"></div>
+</form>
+</section>
+
+<section id="sponsor">
+<h2 class="title">Sponsorship</h2>
+<div class="cards">
+<div class="card"><h3>🍬 Laddu Sponsorship</h3><p>Support prasadam distribution.</p></div>
+<div class="card"><h3>🌸 Garland Sponsorship</h3><p>Support flowers and decoration.</p></div>
+<div class="card"><h3>🪔 Pooja Items</h3><p>Contribute pooja materials and devotional requirements.</p></div>
+<div class="card"><h3>🙏 Other Sponsorship</h3><p>Use the form below for any other contribution.</p></div>
+</div>
+<form id="sponsorForm" style="margin-top:20px">
+<label>Name<input required name="name"></label><label>Mobile<input required name="phone" pattern="[0-9]{10}"></label>
+<label>Category<select required name="category"><option value="">Select</option><option>Laddu</option><option>Garlands</option><option>Pooja Items</option><option>Other</option></select></label>
+<label>Amount (₹)<input required type="number" min="1" name="amount"></label>
+<label>Message<textarea name="message" rows="3"></textarea></label>
+<button class="btn" type="submit">Submit Sponsorship</button><div id="sponsorSuccess" class="hidden"></div>
+</form>
+</section>
+
+<section id="contact">
+<h2 class="title">Contact</h2>
+<div class="card" style="max-width:700px;margin:auto;text-align:center">
+<p>📍 Pathoor</p><p>📞 Mandal Contact: <b>ADD PHONE NUMBER</b></p>
+<p class="small">Replace the placeholder contact details before publishing.</p>
+</div>
+</section>
+</main>
+<footer><b>Sri Laxmi Narasimha Ganesh Mandali Team • Pathoor Hindu Sena</b><br><span class="small">Devotion • Tradition • Service • Unity</span></footer>
+
+<script>
+const today=new Date().toISOString().split('T')[0];
+document.querySelectorAll('input[type=date]').forEach(x=>x.min=today);
+function save(key, form, box, message){
+  const data=Object.fromEntries(new FormData(form).entries());
+  const arr=JSON.parse(localStorage.getItem(key)||'[]'); data.createdAt=new Date().toISOString(); arr.push(data);
+  localStorage.setItem(key,JSON.stringify(arr)); box.classList.remove('hidden'); box.textContent=message+' Reference: '+key.toUpperCase()+'-'+String(arr.length).padStart(3,'0'); form.reset();
+}
+poojaForm.onsubmit=e=>{e.preventDefault();save('poojaBookings',poojaForm,poojaSuccess,'Pooja request saved successfully.')};
+annaForm.onsubmit=e=>{e.preventDefault();save('annadanamBookings',annaForm,annaSuccess,'Annadanam request saved successfully.')};
+sponsorForm.onsubmit=e=>{e.preventDefault();save('sponsorships',sponsorForm,sponsorSuccess,'Sponsorship request saved successfully.')}
+</script>
+</body>
+</html>
