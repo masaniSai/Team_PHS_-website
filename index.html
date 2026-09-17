@@ -109,17 +109,182 @@ footer{background:#401207;color:#fff;text-align:center;padding:28px 16px;margin-
 </main>
 <footer><b>Sri Laxmi Narasimha Sri Laxmi Narasimha Ganesh Mandal Team • Pathoor Hindu Sena</b><br><span class="small">Devotion • Tradition • Service • Unity</span></footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-const today=new Date().toISOString().split('T')[0];
-document.querySelectorAll('input[type=date]').forEach(x=>x.min=today);
-function save(key, form, box, message){
-  const data=Object.fromEntries(new FormData(form).entries());
-  const arr=JSON.parse(localStorage.getItem(key)||'[]'); data.createdAt=new Date().toISOString(); arr.push(data);
-  localStorage.setItem(key,JSON.stringify(arr)); box.classList.remove('hidden'); box.textContent=message+' Reference: '+key.toUpperCase()+'-'+String(arr.length).padStart(3,'0'); form.reset();
+const SUPABASE_URL = "https://uxpildginzvnlacarmcg.supabase.co";
+const SUPABASE_KEY = "sb_publishable_n5enrlbGPjs84QJ9XY2yKw_NRznda2e";
+
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+const today = new Date().toISOString().split("T")[0];
+
+document.querySelectorAll('input[type="date"]').forEach(input => {
+  input.min = today;
+});
+
+
+/* =========================
+   LOAD POOJA SCHEDULE
+========================= */
+
+async function loadPoojaSchedule() {
+  const { data, error } = await supabase
+    .rpc("get_pooja_schedule");
+
+  if (error) {
+    console.error("Schedule error:", error);
+    return [];
+  }
+
+  return data || [];
 }
-poojaForm.onsubmit=e=>{e.preventDefault();save('poojaBookings',poojaForm,poojaSuccess,'Pooja request saved successfully.')};
-annaForm.onsubmit=e=>{e.preventDefault();save('annadanamBookings',annaForm,annaSuccess,'Annadanam request saved successfully.')};
-sponsorForm.onsubmit=e=>{e.preventDefault();save('sponsorships',sponsorForm,sponsorSuccess,'Sponsorship request saved successfully.')}
+
+
+/* =========================
+   POOJA BOOKING
+========================= */
+
+poojaForm.onsubmit = async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(poojaForm);
+
+  const name = formData.get("name");
+  const phone = formData.get("phone");
+  const mandal = formData.get("mandal");
+  const date = formData.get("date");
+  const slotTime = formData.get("time");
+  const people = formData.get("people");
+
+  if (!name || !phone || !mandal || !date || !slotTime) {
+    alert("Please fill all required fields.");
+    return;
+  }
+
+  /* Check whether this date + time is already booked */
+
+  const { data: existing, error: checkError } = await supabase
+    .from("pooja_bookings")
+    .select("id")
+    .eq("date", date)
+    .eq("time", slotTime)
+    .eq("mandal", mandal)
+    .limit(1);
+
+  if (checkError) {
+    console.error(checkError);
+    alert("Unable to check the booking. Please try again.");
+    return;
+  }
+
+  if (existing && existing.length > 0) {
+    alert("❌ This pooja slot is already booked. Please select another date or time.");
+    return;
+  }
+
+  /* Save booking */
+
+  const { error } = await supabase
+    .from("pooja_bookings")
+    .insert({
+      name: name,
+      phone: phone,
+      mandal: mandal,
+      date: date,
+      time: slotTime,
+      people: people ? Number(people) : 1
+    });
+
+  if (error) {
+    console.error(error);
+    alert("Booking failed. Please try again.");
+    return;
+  }
+
+  poojaSuccess.classList.remove("hidden");
+  poojaSuccess.textContent =
+    "✅ Pooja booking confirmed successfully.";
+
+  poojaForm.reset();
+
+  loadPoojaSchedule();
+};
+
+
+/* =========================
+   SPONSORSHIP
+========================= */
+
+sponsorForm.onsubmit = async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(sponsorForm);
+
+  const name = formData.get("name");
+  const phone = formData.get("phone");
+  const mandal = formData.get("mandal");
+  const sponsorshipType = formData.get("sponsorship_type");
+  const amount = formData.get("amount");
+  const message = formData.get("message");
+
+  const { error } = await supabase
+    .from("sponsorships")
+    .insert({
+      name: name,
+      phone: phone,
+      mandal: mandal,
+      sponsorship_type: sponsorshipType,
+      amount: amount ? Number(amount) : null,
+      message: message
+    });
+
+  if (error) {
+    console.error(error);
+    alert("Sponsorship submission failed. Please try again.");
+    return;
+  }
+
+  sponsorSuccess.classList.remove("hidden");
+  sponsorSuccess.textContent =
+    "🙏 Thank you! Your sponsorship has been recorded.";
+
+  sponsorForm.reset();
+
+  loadSponsors();
+};
+
+
+/* =========================
+   SHOW SPONSORS
+========================= */
+
+async function loadSponsors() {
+
+  const { data, error } = await supabase
+    .from("sponsorships")
+    .select("name, amount, sponsorship_type, message, created_at")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Sponsor loading error:", error);
+    return;
+  }
+
+  console.log("Sponsors:", data);
+}
+
+
+/* =========================
+   INITIAL LOAD
+========================= */
+
+loadPoojaSchedule();
+loadSponsors();
+
 </script>
 </body>
 </html>
